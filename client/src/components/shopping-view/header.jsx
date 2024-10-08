@@ -6,7 +6,7 @@ import {
   useLocation,
   useSearchParams,
 } from 'react-router-dom'
-import { logoutUser } from '@/store/auth-slice'
+import { logoutUser, resetTokenAndCredentials } from '@/store/auth-slice'
 import { Button } from '../ui/button'
 import { HousePlug, LogOut, Menu, ShoppingCart, UserCog } from 'lucide-react'
 import { shoppingViewHeaderMenuItems } from '@/config'
@@ -76,6 +76,10 @@ function HeaderRightContent() {
 
   function handleLogout() {
     dispatch(logoutUser())
+       // if we don't have any hosting error, ignore d code below
+    // dispatch(resetTokenAndCredentials())
+    // sessionStorage.clear()
+    // navigate('/auth/login')
   }
   //get cartItems(if available) on pageLoad
   useEffect(() => {

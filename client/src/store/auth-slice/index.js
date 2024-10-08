@@ -4,6 +4,7 @@ const initialState = {
   isAuthenticated: false,
   user: null,
   isLoading: true,
+  token: null,
 }
 
 export const registerUser = createAsyncThunk(
@@ -52,6 +53,25 @@ export const checkAuth = createAsyncThunk(
     return data
   }
 )
+// if we have dont any issues with hosting, use this code fix
+// export const checkAuth = createAsyncThunk(
+//   '/auth/checkauth',
+
+//   async (token) => {
+//     const { data } = await axios.get(
+//       `${import.meta.env.VITE_APP}/auth/check-auth`,
+//       {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//           'Cache-Control':
+//             'no-store, no-cache, must-revalidate, proxy-revalidate',
+//         },
+//       }
+//     )
+
+//     return data
+//   }
+// )
 
 export const logoutUser = createAsyncThunk(
   '/auth/logout',
@@ -74,6 +94,12 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {},
+    resetTokenAndCredentials: (state) => {
+      // if we have don't any issues with hosting, use this code fix
+      state.isAuthenticated = false
+      state.user = null
+      state.token = null
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -97,11 +123,15 @@ const authSlice = createSlice({
         state.isLoading = false
         state.user = action.payload.success ? action.payload.user : null
         state.isAuthenticated = action.payload.success
+        // if we have don't any issues with hosting, use this code fix
+        // state.token = action.payload.token
+        // sessionStorage.setItem('token', JSON.stringify(action.payload.token))
       })
       .addCase(loginUser.rejected, (state) => {
         state.isLoading = false
         state.user = null
         state.isAuthenticated = false
+        state.token = null
       })
       .addCase(checkAuth.pending, (state) => {
         state.isLoading = true
@@ -124,5 +154,5 @@ const authSlice = createSlice({
   },
 })
 
-export const { setUser } = authSlice.actions
+export const { setUser, resetTokenAndCredentials } = authSlice.actions
 export default authSlice.reducer

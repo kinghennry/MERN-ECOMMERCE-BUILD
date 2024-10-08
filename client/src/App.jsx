@@ -4,7 +4,6 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useSelector, useDispatch } from 'react-redux'
 import { checkAuth } from './store/auth-slice'
 // todo********(download codenium before end of this )
-// todo download comprehensive vscodeshorts videos from youtube
 
 //common layouts
 import CheckAuth from './components/common/check-auth'
@@ -42,6 +41,10 @@ export default function App() {
 
   useEffect(() => {
     dispatch(checkAuth())
+    // if we don't have any hosting error, ignore d code below
+    // get the token from sessionStorage
+    // const token = JSON.parse(sessionStorage.getItem('token'))
+    // dispatch(checkAuth(token))
   }, [dispatch])
 
   // sb-juqbg32315118@personal.example.com
